@@ -1,0 +1,198 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@200;300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+/* PAGE CONTAINER */
+.login-container {
+  position: relative;
+  width: 100vw;     /* FULL width */
+  height: 100vh;    /* FULL height */
+
+  display: flex;     
+  justify-content: center;  /* Centers horizontally */
+  align-items: center;       /* Centers vertically */
+
+  overflow: hidden;
+}
+
+
+/* FULLSCREEN VIDEO BACKGROUND */
+.video-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -2;
+}
+
+.video-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(40%);
+}
+
+/* LOGIN BOX */
+.wrapper {
+  width: 400px;
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.input-field {
+  position: relative;
+  border-bottom: 2px solid #ccc;
+  margin: 15px 0;
+}
+
+.input-field label {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 16px;
+  pointer-events: none;
+  transition: 0.15s ease;
+}
+
+.input-field input {
+  width: 100%;
+  height: 40px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #fff;
+}
+
+.input-field input:focus ~ label,
+.input-field input:valid ~ label {
+  font-size: 0.8rem;
+  top: 10px;
+  transform: translateY(-120%);
+}
+
+.error {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  margin-top: -10px;
+  text-align: left;
+}
+
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.remember {
+    display: flex;
+    flex-direction: row-reverse; /* checkbox on the RIGHT */
+    align-items: center;
+    gap: 6px; /* small space between text and checkbox */
+    color: #fff;
+    cursor: pointer;
+}
+
+.remember input[type="checkbox"] {
+    cursor: pointer;
+}
+
+
+button {
+  background: #fff;
+  color: grey;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 3px;
+  font-size: 16px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  color: #fff;
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.social-divider {
+  display: flex;
+  align-items: center;
+  color: #bbb;
+  font-size: 0.85rem;
+  margin: 25px 0;
+}
+
+.social-divider::before,
+.social-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #666;
+  margin: 0 10px;
+}
+
+.social-login {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.google-btn {
+  width: 55px;
+  height: 55px;
+  border-radius: 12px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.google-btn:hover {
+  transform: scale(1.12);
+}
+
+.google-btn img {
+  width: 55px;
+  height: 55px;
+  border-radius: 10px;
+}
+
+.register {
+  margin-top: 30px;
+  color: #fff;
+}
+
