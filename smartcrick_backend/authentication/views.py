@@ -55,9 +55,24 @@ class LoginAPIView(APIView):
 # ----------------------------
 # GOOGLE LOGIN
 # ----------------------------
+from drf_spectacular.utils import extend_schema, OpenApiTypes
+
 class GoogleLoginAPIView(APIView):
     permission_classes = [AllowAny]
 
+    @extend_schema(
+        request={
+            "application/json": {
+                "type": "object",
+                "properties": {
+                    "id_token": {"type": "string"},
+                },
+                "required": ["id_token"],
+            }
+        },
+        responses={200: dict},
+        description="Login/Register user using Google OAuth id_token"
+    )
     def post(self, request):
         token = request.data.get("id_token")
 
@@ -93,6 +108,9 @@ class GoogleLoginAPIView(APIView):
             "refresh": str(refresh),
             "new_user": created,
         })
+    print("GOOGLE_CLIENT_ID =", settings.GOOGLE_CLIENT_ID)
+
+
 
 
 # ----------------------------

@@ -2,11 +2,21 @@
 Django settings for smartcrick_backend project.
 """
 
-from pathlib import Path
-import os
 from datetime import timedelta
 
+
+from pathlib import Path
+import os
+from dotenv import load_dotenv
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# ⬇️ THIS IS THE KEY FIX
+ENV_PATH = BASE_DIR.parent / ".env"
+load_dotenv(ENV_PATH)
+
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+
 
 # -------------------------------------------------------------------
 # SECURITY

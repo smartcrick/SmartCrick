@@ -253,7 +253,8 @@ export default function Register() {
 
           <div className="social-login">
             <button type="button" className="google-btn">
-              <img src="/google-icon.png" alt="Google" />
+              <div id="google-login-btn"><img src="/google-icon.png" alt="Google" /></div>
+              
             </button>
           </div>
 

@@ -1,30 +1,32 @@
-const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-console.log("Google ID:", GOOGLE_CLIENT_ID);
-
 import { GoogleLogin } from "@react-oauth/google";
-import axios from "axios";
+import axiosClient from "../api/axiosClient";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export default function GoogleLoginButton() {
-  const handleSuccess = async (credentialResponse) => {
-    try {
-      const res = await axios.post(
-        "http://localhost:8000/authentication/api/google-login/",
-        { id_token: credentialResponse.credential }
-      );
-
-      localStorage.setItem("access", res.data.access);
-      localStorage.setItem("refresh", res.data.refresh);
-
-      window.location.href = "/profile";
-    } catch (err) {
-      console.error("Google login failed:", err);
-    }
-  };
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   return (
     <GoogleLogin
-      onSuccess={handleSuccess}
-      onError={() => console.log("Google Login Failed")}
+      onSuccess={async (credentialResponse) => {
+        console.log("Credential Response:", credentialResponse);
+        try {
+          const res = await axiosClient.post("/api/auth/google-login/", {
+            id_token: credentialResponse.credential,
+          });
+
+          login(res.data.access, res.data.refresh);
+          navigate("/profile");
+        } catch (err) {
+          console.error("Google login error:", err.response?.data || err);
+          alert("Google login failed");
+        }
+      }}
+      onError={() => {
+        alert("Google Login Failed");
+      }}
     />
   );
 }

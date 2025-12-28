@@ -1,7 +1,8 @@
-import { useState, useContext, useEffect } from "react";
-import axiosClient from "../api/axiosClient";
-import { AuthContext } from "../context/AuthContext";
+import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import axiosClient from "../api/axiosClient";
+import GoogleLoginButton from "../component/GoogleLoginButton";
 import "../css/Login.css";
 
 export default function Login() {
@@ -27,40 +28,6 @@ export default function Login() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // -------------------------------------------
-  // GOOGLE LOGIN LOGIC
-  // -------------------------------------------
-  useEffect(() => {
-    /* global google */
-    if (!window.google) return;
-
-    google.accounts.id.initialize({
-      client_id: "YOUR_GOOGLE_CLIENT_ID_HERE",
-      callback: handleGoogleLogin,
-    });
-
-    google.accounts.id.renderButton(
-      document.getElementById("google-login-btn"),
-      { theme: "outline", size: "large", width: "100%" }
-    );
-  }, []);
-
-  const handleGoogleLogin = async (response) => {
-    try {
-      const res = await axiosClient.post("/api/auth/google-login/", {
-        id_token: response.credential,
-      });
-
-      login(res.data.access, res.data.refresh);
-      navigate("/profile");
-    } catch (err) {
-      console.error(err);
-      setErrors({ api: "Google login failed" });
-    }
-  };
-
-  // -------------------------------------------
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
@@ -76,7 +43,6 @@ export default function Login() {
 
   return (
     <div className="login-container">
-
       {/* FULLSCREEN VIDEO BACKGROUND */}
       <div className="video-bg">
         <video autoPlay muted loop playsInline>
@@ -89,6 +55,7 @@ export default function Login() {
         <form onSubmit={handleSubmit}>
           <h2>Login</h2>
 
+          {/* Username */}
           <div className="input-field">
             <input
               type="text"
@@ -101,6 +68,7 @@ export default function Login() {
           </div>
           {errors.username && <p className="error">{errors.username}</p>}
 
+          {/* Password */}
           <div className="input-field">
             <input
               type="password"
@@ -112,29 +80,33 @@ export default function Login() {
             <label>Enter your password</label>
           </div>
           {errors.password && <p className="error">{errors.password}</p>}
+
+          {/* API Error */}
           {errors.api && <p className="error">{errors.api}</p>}
 
+          {/* Remember & Forgot */}
           <div className="remember-forgot">
             <label className="remember">
               <input type="checkbox" id="remember" />
               <span>Remember me</span>
             </label>
             <Link to="/forgot-password">Forgot password?</Link>
-
-
           </div>
 
+          {/* Login Button */}
           <button type="submit">Sign In</button>
 
+          {/* Divider */}
           <div className="social-divider">
             <span>OR CONTINUE WITH</span>
           </div>
 
           {/* GOOGLE LOGIN BUTTON */}
           <div className="social-login">
-            <div id="google-login-btn"></div>
+            <GoogleLoginButton />
           </div>
 
+          {/* Register */}
           <div className="register">
             <p>
               Don't have an account? <Link to="/register">Sign up</Link>
