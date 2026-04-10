@@ -1,0 +1,124 @@
+.about-page {
+  max-width: 1300px;
+  margin: 0 0;
+  padding: 2rem;
+  color: white;
+  box-sizing: border-box;
+}
+
+/* HERO */
+.about-hero {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.about-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.about-hero p {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* SECTIONS */
+.about-section {
+  margin-bottom: 4rem;
+}
+
+.about-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.about-section p {
+  max-width: 800px;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+/* LIGHT SECTION */
+.about-section.light {
+  background: white;
+  color: black;
+  padding: 3rem 2rem;
+  border-radius: 12px;
+}
+
+.about-section.light  h2{
+
+ text-align: center;
+  color: black;
+ 
+}
+
+/* GRID */
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+ 
+}
+
+
+.about-card {
+  background: #f4f6f8;
+  color: black;
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.about-card h3 {
+  margin-bottom: 1rem;
+  font-weight: bold;
+  
+}
+
+/* LIST */
+.about-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.about-list li {
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+/* CTA */
+.about-cta {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 24, 84, 1),
+    rgba(3, 0, 0, 1)
+  );
+  border-radius: 14px;
+}
+
+.about-cta h2 {
+  margin-bottom: 1rem;
+}
+
+.about-cta p {
+  max-width: 700px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .about-hero h1 {
+    font-size: 2rem;
+  }
+
+  .about-section.light {
+    padding: 2rem 1.5rem;
+  }
+}

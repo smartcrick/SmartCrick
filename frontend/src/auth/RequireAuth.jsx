@@ -5,13 +5,12 @@ import { Navigate } from "react-router-dom";
 export default function RequireAuth({ children }) {
   const { user, loading } = useContext(AuthContext);
 
-  // ⛔ Prevent redirect until auth check is done
- if (loading) return <div className="loading">Loading...</div>;
+  // Wait silently — no layout, no CSS
+  if (loading) return null;
 
-
-  // ❌ Not logged in → go to login
+  // Not logged in
   if (!user) return <Navigate to="/login" replace />;
 
-  // ✔ Logged in → allow page
+  // Logged in
   return children;
 }

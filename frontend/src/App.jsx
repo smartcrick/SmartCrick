@@ -7,12 +7,13 @@ import ForgotPassword from "./pages/ForgotPassword.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
 
 import RequireAuth from "./auth/RequireAuth.jsx";
+import Layout from "./component/Layout.jsx";
+
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-
         {/* PUBLIC ROUTES */}
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
@@ -22,13 +23,15 @@ function App() {
 
         {/* PROTECTED ROUTES */}
         <Route
-          path="/profile"
+          path="/*"  // catch all for authenticated routes
           element={
             <RequireAuth>
-              <Profile />
+              <Layout />
             </RequireAuth>
           }
-        />
+        >
+          <Route path="profile" element={<Profile />} />
+        </Route>
 
         {/* Fallback */}
         <Route path="*" element={<Login />} />

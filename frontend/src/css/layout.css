@@ -1,0 +1,78 @@
+/* ROOT — FIXED BACKGROUND */
+.main-layout-container {
+    position: fixed;          /* 🔥 FIX THE BACKGROUND */
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;         /* 🔥 DISABLE PAGE SCROLL */
+
+    background: #030000;
+    background: linear-gradient(
+        0deg,
+        rgba(3, 0, 0, 1) 35%,
+        rgba(3, 0, 0, 1) 64%,
+        rgba(59, 24, 84, 1) 92%
+    );
+}
+
+/* BODY BELOW FIXED NAVBAR */
+.body-wrapper {
+    display: flex;
+    flex: 1;
+    padding-top: 80px;        /* 🔥 NAVBAR HEIGHT */
+    height: 100%;
+}
+
+/* SIDEBAR */
+.sidebar-wrapper {
+    width: 250px;
+    flex-shrink: 0;
+
+    height: calc(100vh - 80px); /* 🔥 BELOW NAVBAR */
+    margin-top: 80px;
+
+    overflow: hidden;         /* 🚫 sidebar does NOT scroll */
+    display: flex;
+    flex-direction: column;
+    transition: width 0.3s ease;
+}
+
+/* CONTENT — ONLY SCROLLING AREA */
+.content-wrapper {
+    flex: 1;
+    height: calc(100vh - 80px); /* 🔥 LOCK HEIGHT */
+    overflow-y: auto;           /* 🔥 ONLY THIS SCROLLS */
+    overflow-x: hidden;
+
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* DASHBOARD WIDTH */
+.Home {
+    max-width: 1300px;
+    width: 100%;
+    
+}
+
+
+
+
+
+/* =============== MOBILE =============== */
+@media (max-width: 1024px) {
+    .sidebar-wrapper {
+        display: none;
+    }
+
+    .content-wrapper {
+        margin-left: 0 !important;
+        padding: 10px;
+    }
+}
