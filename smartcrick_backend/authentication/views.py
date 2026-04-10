@@ -1,16 +1,16 @@
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 from django.contrib.auth import authenticate
-from rest_framework_simplejwt.tokens import RefreshToken
-from google.oauth2 import id_token
-from google.auth.transport import requests
 from django.conf import settings
-from django.core.mail import send_mail
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.core.mail import send_mail
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from google.auth.transport import requests
+from google.oauth2 import id_token
+from rest_framework_simplejwt.tokens import RefreshToken
 from drf_spectacular.utils import extend_schema
 
 from registration.models import User
@@ -51,11 +51,6 @@ class LoginAPIView(APIView):
             "refresh": str(refresh),
         })
 
-
-# ----------------------------
-# GOOGLE LOGIN
-# ----------------------------
-from drf_spectacular.utils import extend_schema, OpenApiTypes
 
 class GoogleLoginAPIView(APIView):
     permission_classes = [AllowAny]
@@ -108,10 +103,6 @@ class GoogleLoginAPIView(APIView):
             "refresh": str(refresh),
             "new_user": created,
         })
-    print("GOOGLE_CLIENT_ID =", settings.GOOGLE_CLIENT_ID)
-
-
-
 
 # ----------------------------
 # FORGOT PASSWORD

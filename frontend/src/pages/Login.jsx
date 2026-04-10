@@ -1,8 +1,10 @@
 import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 import axiosClient from "../api/axiosClient";
 import GoogleLoginButton from "../component/GoogleLoginButton";
+import { AuthContext } from "../context/AuthContext.jsx";
 import "../css/Login.css";
 
 export default function Login() {
@@ -15,6 +17,7 @@ export default function Login() {
   });
 
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -35,9 +38,9 @@ export default function Login() {
     try {
       const res = await axiosClient.post("/api/auth/login/", form);
       login(res.data.access, res.data.refresh);
-      navigate("/profile");
+      navigate("/dashboard");
     } catch (err) {
-      setErrors({ api: "Incorrect username or password" });
+      setErrors({ api: err.response?.data?.error || "Incorrect username or password" });
     }
   };
 
@@ -46,7 +49,7 @@ export default function Login() {
       {/* FULLSCREEN VIDEO BACKGROUND */}
       <div className="video-bg">
         <video autoPlay muted loop playsInline>
-          <source src="/bg.mp4" type="video/mp4" />
+          <source src="/log-vid.mp4" type="video/mp4" />
         </video>
       </div>
 
@@ -55,7 +58,6 @@ export default function Login() {
         <form onSubmit={handleSubmit}>
           <h2>Login</h2>
 
-          {/* Username */}
           <div className="input-field">
             <input
               type="text"
@@ -64,52 +66,52 @@ export default function Login() {
               value={form.username}
               onChange={handleChange}
             />
-            <label>Enter your username</label>
+            <label>Enter username</label>
           </div>
           {errors.username && <p className="error">{errors.username}</p>}
 
-          {/* Password */}
-          <div className="input-field">
+          <div className="input-field password-field">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               required
               value={form.password}
               onChange={handleChange}
             />
-            <label>Enter your password</label>
-          </div>
-          {errors.password && <p className="error">{errors.password}</p>}
+            <label>Enter password</label>
 
-          {/* API Error */}
+            <span
+              className="toggle-password-icon"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
+
+          {errors.password && <p className="error">{errors.password}</p>}
           {errors.api && <p className="error">{errors.api}</p>}
 
-          {/* Remember & Forgot */}
           <div className="remember-forgot">
             <label className="remember">
               <input type="checkbox" id="remember" />
               <span>Remember me</span>
             </label>
-            <Link to="/forgot-password">Forgot password?</Link>
+            <Link id="but" to="/forgot-password">Forgot password?</Link>
           </div>
 
-          {/* Login Button */}
-          <button type="submit">Sign In</button>
+          <button id="submit" type="submit">Sign In</button>
 
-          {/* Divider */}
           <div className="social-divider">
             <span>OR CONTINUE WITH</span>
           </div>
 
-          {/* GOOGLE LOGIN BUTTON */}
           <div className="social-login">
             <GoogleLoginButton />
           </div>
 
-          {/* Register */}
           <div className="register">
             <p>
-              Don't have an account? <Link to="/register">Sign up</Link>
+              Don't have an account? <Link id="but" to="/register">Sign up</Link>
             </p>
           </div>
         </form>

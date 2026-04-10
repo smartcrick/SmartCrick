@@ -4,18 +4,12 @@ export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);  // <--- NEW
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("access");
-
-    if (token) {
-      setUser(true);
-    } else {
-      setUser(false);
-    }
-
-    setLoading(false);   // <--- tell React that auth check is done
+    setUser(Boolean(token));
+    setLoading(false);
   }, []);
 
   const login = (access, refresh) => {

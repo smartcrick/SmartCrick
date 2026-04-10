@@ -73,7 +73,7 @@ h2 {
   top: 50%;
   left: 0;
   transform: translateY(-50%);
-  color: #fff;
+  color: #a6a6a6;
   font-size: 16px;
   pointer-events: none;
   transition: 0.15s ease;
@@ -117,7 +117,7 @@ h2 {
     flex-direction: row-reverse; /* checkbox on the RIGHT */
     align-items: center;
     gap: 6px; /* small space between text and checkbox */
-    color: #fff;
+    color: #a6a6a6;
     cursor: pointer;
 }
 
@@ -196,3 +196,35 @@ button:hover {
   color: #fff;
 }
 
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  width: 100%;
+  padding-right: 40px; /* Add enough space for the eye icon */
+}
+
+.toggle-password-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px; /* distance from right edge */
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #555;
+  font-size: 1.1rem; /* adjust icon size if needed */
+    user-select: none;
+}
+
+#but {
+  color: grey;
+  
+}
+
+#but:hover {
+  color: white;
+}
+
+#submit {
+  background-color: transparent;
+}

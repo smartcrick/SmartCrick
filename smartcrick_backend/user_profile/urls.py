@@ -1,5 +1,6 @@
-from django.urls import path, include
+from django.urls import path
 
-urlpatterns = [
-    path("api/", include("user_profile.api_urls")),
-]
+from .views import ProfileAPIView
+
+
+urlpatterns = [path("", ProfileAPIView.as_view(), name="profile_api")]

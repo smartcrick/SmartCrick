@@ -1,9 +1,11 @@
 from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
-from .serializers import ProfileSerializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
 from drf_spectacular.utils import extend_schema
+
+from .serializers import ProfileSerializer
 
 
 class ProfileAPIView(APIView):
@@ -15,7 +17,7 @@ class ProfileAPIView(APIView):
     )
     def get(self, request):
         profile = request.user.profile
-        serializer = ProfileSerializer(profile, context={'request': request})
+        serializer = ProfileSerializer(profile)
         return Response(serializer.data)
 
 
@@ -26,7 +28,7 @@ class ProfileAPIView(APIView):
     )
     def put(self, request):
         profile = request.user.profile
-        serializer = ProfileSerializer(profile, data=request.data, partial=False, context={'request': request})
+        serializer = ProfileSerializer(profile, data=request.data, partial=False)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -40,7 +42,7 @@ class ProfileAPIView(APIView):
     )
     def patch(self, request):
         profile = request.user.profile
-        serializer = ProfileSerializer(profile, data=request.data, partial=True, context={'request': request})
+        serializer = ProfileSerializer(profile, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

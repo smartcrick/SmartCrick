@@ -2,29 +2,35 @@
 Django settings for smartcrick_backend project.
 """
 
-from datetime import timedelta
-
-
-from pathlib import Path
 import os
+from datetime import timedelta
+from pathlib import Path
+
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# ⬇️ THIS IS THE KEY FIX
 ENV_PATH = BASE_DIR.parent / ".env"
 load_dotenv(ENV_PATH)
 
-GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+
+def env_bool(name, default=False):
+    return os.getenv(name, str(default)).strip().lower() in {"1", "true", "yes", "on"}
+
+
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "")
 
 
 # -------------------------------------------------------------------
 # SECURITY
 # -------------------------------------------------------------------
 
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "fallback-secret")
-DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "0.0.0.0"]
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-change-me")
+DEBUG = env_bool("DJANGO_DEBUG", True)
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,0.0.0.0").split(",")
+    if host.strip()
+]
 
 # -------------------------------------------------------------------
 # APPLICATIONS
@@ -42,9 +48,9 @@ INSTALLED_APPS = [
     "authentication",
     "registration",
     "user_profile",
+    "performance",
     "analysis",
     "recommendation",
-    "visualization",
 
     # Third-party
     "rest_framework",
@@ -95,18 +101,24 @@ WSGI_APPLICATION = "smartcrick_backend.wsgi.application"
 # DATABASE
 # -------------------------------------------------------------------
 
-import os
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("POSTGRES_DB", "smartcrick_db"),
-        "USER": os.environ.get("POSTGRES_USER", "smartcrick_user"),
-        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "smartcrick_pass"),
-        "HOST": os.environ.get("POSTGRES_HOST", "localhost"),  # fallback for local run
-        "PORT": os.environ.get("POSTGRES_PORT", "5432"),
+if env_bool("DJANGO_USE_SQLITE", False):
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("POSTGRES_DB", "smartcrick_db"),
+            "USER": os.getenv("POSTGRES_USER", "smartcrick_user"),
+            "PASSWORD": os.getenv("POSTGRES_PASSWORD", "smartcrick_pass"),
+            "HOST": os.getenv("POSTGRES_HOST", "localhost"),
+            "PORT": os.getenv("POSTGRES_PORT", "5432"),
+        }
+    }
 
 
 # -------------------------------------------------------------------
@@ -144,7 +156,13 @@ MEDIA_ROOT = BASE_DIR / "media"
 # CORS
 # -------------------------------------------------------------------
 
-CORS_ALLOW_ALL_ORIGINS = True
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+CORS_ALLOW_ALL_ORIGINS = env_bool("CORS_ALLOW_ALL_ORIGINS", False)
+CORS_ALLOWED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv("CORS_ALLOWED_ORIGINS", FRONTEND_URL).split(",")
+    if origin.strip()
+]
 CORS_ALLOW_CREDENTIALS = True
 
 
@@ -178,17 +196,10 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
 }
 
-import os
-
-GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
-
-FRONTEND_URL = "http://localhost:5173"
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'smartcrick.virtualcoach@gmail.com'
-EMAIL_HOST_PASSWORD = 'ufvmljoicwfpgzbs'
-DEFAULT_FROM_EMAIL = 'smartcrick.virtualcoach.siddiqui@gmail.com'
-
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
+EMAIL_HOST = os.getenv("EMAIL_HOST", "")
+EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
+EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "no-reply@smartcrick.local")

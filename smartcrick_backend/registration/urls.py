@@ -1,5 +1,6 @@
-from django.urls import path, include
+from django.urls import path
 
-urlpatterns = [
-    path("", include("registration.api_urls")),
-]
+from .views import RegisterApiView
+
+
+urlpatterns = [path("", RegisterApiView.as_view(), name="register_api")]

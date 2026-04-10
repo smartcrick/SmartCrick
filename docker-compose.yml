@@ -4,7 +4,7 @@ services:
   backend:
     build:
       context: ./smartcrick_backend
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     container_name: smartcrick-backend
     ports:
       - "9000:8000"
@@ -22,7 +22,7 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     container_name: smartcrick-frontend
     ports:
       - "3000:80"

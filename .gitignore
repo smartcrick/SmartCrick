@@ -1,0 +1,25 @@
+# Environment
+.env
+.env.*
+!.env.example
+!frontend/.env.example
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+smartcrick_backend/db.sqlite3
+smartcrick_backend/media/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
