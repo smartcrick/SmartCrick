@@ -1,8 +1,9 @@
 import { useState } from "react";
 
-import axiosClient from "../../api/axiosClient";
+import { usePerformancePersistence } from "../../hooks/usePerformancePersistence";
 
 const PerformanceForm = ({ role, sessionType, next }) => {
+  const { savePerformanceDetails, isSaving, error } = usePerformancePersistence();
   const [data, setData] = useState({
     role,
     session_type: sessionType,
@@ -13,8 +14,8 @@ const PerformanceForm = ({ role, sessionType, next }) => {
   };
 
   const submit = async () => {
-    const res = await axiosClient.post("/api/performance/", data);
-    next(res.data.id);
+    const performanceId = await savePerformanceDetails(data);
+    next(performanceId);
   };
 
   return (
@@ -42,7 +43,10 @@ const PerformanceForm = ({ role, sessionType, next }) => {
         </>
       )}
 
-      <button onClick={submit}>Next</button>
+      {error && <p>{error}</p>}
+      <button onClick={submit} disabled={isSaving}>
+        {isSaving ? "Saving..." : "Next"}
+      </button>
     </div>
   );
 };

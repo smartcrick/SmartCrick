@@ -1,15 +1,16 @@
 import { useState } from "react";
 
-import axiosClient from "../../api/axiosClient";
+import { usePerformancePersistence } from "../../hooks/usePerformancePersistence";
 
-const GoalForm = ({ next }) => {
+const GoalForm = ({ next, performanceId = null }) => {
+  const { saveGoal, isSaving, error } = usePerformancePersistence();
   const [goal, setGoal] = useState({
     goal_type: "batting",
     improvement_area: "",
   });
 
   const submit = async () => {
-    await axiosClient.post("/api/goals/", goal);
+    await saveGoal(goal, performanceId);
     next();
   };
 
@@ -21,7 +22,10 @@ const GoalForm = ({ next }) => {
           setGoal({ ...goal, improvement_area: e.target.value })
         }
       />
-      <button onClick={submit}>Next</button>
+      {error && <p>{error}</p>}
+      <button onClick={submit} disabled={isSaving}>
+        {isSaving ? "Saving..." : "Next"}
+      </button>
     </div>
   );
 };

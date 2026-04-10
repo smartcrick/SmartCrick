@@ -20,6 +20,12 @@ class GoalSerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = ("user", "created_at")
 
+    def validate_performance(self, value):
+        request = self.context.get("request")
+        if request and value.user_id != request.user.id:
+            raise serializers.ValidationError("You can only attach goals to your own performance entries.")
+        return value
+
 
 class VideoSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)

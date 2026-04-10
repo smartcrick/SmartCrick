@@ -71,6 +71,13 @@ class Goal(models.Model):
     ]
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    performance = models.ForeignKey(
+        Performance,
+        on_delete=models.CASCADE,
+        related_name="goals",
+        null=True,
+        blank=True,
+    )
     goal_type = models.CharField(max_length=20, choices=GOAL_TYPES)
     improvement_area = models.CharField(max_length=100)
     description = models.TextField(blank=True)
