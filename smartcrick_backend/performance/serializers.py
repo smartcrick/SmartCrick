@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Performance, Goal, Video
+from .models import Goal, Performance, Video
 
 
 class PerformanceSerializer(serializers.ModelSerializer):

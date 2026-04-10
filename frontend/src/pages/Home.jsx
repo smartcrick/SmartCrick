@@ -3,42 +3,42 @@ import { useNavigate } from "react-router-dom";
 
 import "../css/home.css";
 
-const StepsCarousel = () => {
-  const steps = [
-    {
-      title: "Complete Your Profile",
-      text: "Provide accurate personal and performance information to enable proper analysis."
-    },
-    {
-      title: "Track & Analyze Performance",
-      text: "View performance metrics, trends, and analytical insights in real time."
-    },
-    {
-      title: "Get Smart Recommendations",
-      text: "Receive personalized suggestions to improve performance and achieve goals."
-    }
-  ];
+const STEPS = [
+  {
+    title: "Complete Your Profile",
+    text: "Provide accurate personal and performance information to enable proper analysis."
+  },
+  {
+    title: "Track & Analyze Performance",
+    text: "View performance metrics, trends, and analytical insights in real time."
+  },
+  {
+    title: "Get Smart Recommendations",
+    text: "Receive personalized suggestions to improve performance and achieve goals."
+  }
+];
 
+const StepsCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % steps.length);
+      setCurrentIndex((prev) => (prev + 1) % STEPS.length);
     }, 4000);
 
     return () => clearInterval(interval);
   }, []);
 
-  const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % steps.length);
+  const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % STEPS.length);
   const prevSlide = () =>
-    setCurrentIndex((prev) => (prev === 0 ? steps.length - 1 : prev - 1));
+    setCurrentIndex((prev) => (prev === 0 ? STEPS.length - 1 : prev - 1));
 
   return (
     <div className="steps-carousel">
       <button className="carousel-btn left" onClick={prevSlide}>‹</button>
 
       <div className="step-card-wrapper">
-        {steps.map((step, index) => (
+        {STEPS.map((step, index) => (
           <div
             key={index}
             className="step-card"
@@ -55,7 +55,7 @@ const StepsCarousel = () => {
       <button className="carousel-btn right" onClick={nextSlide}>›</button>
 
       <div className="carousel-dots">
-        {steps.map((_, index) => (
+        {STEPS.map((_, index) => (
           <span
             key={index}
             className={index === currentIndex ? "dot active" : "dot"}
@@ -132,4 +132,3 @@ const Home = () => {
 };
 
 export default Home;
-

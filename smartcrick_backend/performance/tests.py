@@ -1,11 +1,11 @@
 from datetime import date
 
+from registration.models import User
 from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from performance.models import Goal, Performance
-from registration.models import User
 
 
 class PerformanceAPITestCase(APITestCase):

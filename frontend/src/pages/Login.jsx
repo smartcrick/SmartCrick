@@ -4,7 +4,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import axiosClient from "../api/axiosClient";
 import GoogleLoginButton from "../component/GoogleLoginButton";
-import { AuthContext } from "../context/AuthContext.jsx";
+import { AuthContext } from "../context/auth-context.js";
 import "../css/Login.css";
 
 export default function Login() {

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 
 import axiosClient from "../api/axiosClient";
-import { AuthContext } from "../context/AuthContext.jsx";
+import { AuthContext } from "../context/auth-context.js";
 
 export default function Profile() {
   const { logout } = useContext(AuthContext);

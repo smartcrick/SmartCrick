@@ -1,5 +1,6 @@
 from rest_framework.routers import DefaultRouter
-from .views import PerformanceViewSet, GoalViewSet, VideoViewSet
+
+from .views import GoalViewSet, PerformanceViewSet, VideoViewSet
 
 router = DefaultRouter()
 router.register("performance", PerformanceViewSet, basename="performance")

@@ -1,8 +1,9 @@
 from django.urls import path
+
 from .views import (
-    LoginAPIView,
-    GoogleLoginAPIView,
     ForgotPasswordAPIView,
+    GoogleLoginAPIView,
+    LoginAPIView,
     ResetPasswordAPIView,
 )
 

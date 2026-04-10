@@ -2,6 +2,7 @@ PYTHON := venv/bin/python
 PIP := $(PYTHON) -m pip
 DJANGO_USE_SQLITE ?= True
 DJANGO := DJANGO_USE_SQLITE=$(DJANGO_USE_SQLITE) $(PYTHON) smartcrick_backend/manage.py
+DJANGO_TEST_APPS := authentication registration user_profile performance analysis recommendation testapi
 
 .PHONY: help setup setup-backend setup-frontend run-backend run-frontend lint lint-backend lint-frontend fix-lint fix-lint-backend fix-lint-frontend check test makemigrations migrate clean docker-up docker-down
 
@@ -57,7 +58,7 @@ check:
 	$(DJANGO) check
 
 test:
-	$(DJANGO) test
+	$(DJANGO) test $(DJANGO_TEST_APPS)
 
 makemigrations:
 	$(DJANGO) makemigrations

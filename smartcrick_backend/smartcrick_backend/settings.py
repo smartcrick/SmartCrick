@@ -5,6 +5,7 @@ Django settings for smartcrick_backend project.
 import os
 from datetime import timedelta
 from pathlib import Path
+from urllib.parse import urlsplit, urlunsplit
 
 from dotenv import load_dotenv
 
@@ -15,6 +16,18 @@ load_dotenv(ENV_PATH)
 
 def env_bool(name, default=False):
     return os.getenv(name, str(default)).strip().lower() in {"1", "true", "yes", "on"}
+
+
+def default_cors_origins(frontend_url):
+    origins = [frontend_url]
+    parsed = urlsplit(frontend_url)
+
+    if parsed.hostname == "localhost":
+        origins.append(urlunsplit(parsed._replace(netloc=parsed.netloc.replace("localhost", "127.0.0.1", 1))))
+    elif parsed.hostname == "127.0.0.1":
+        origins.append(urlunsplit(parsed._replace(netloc=parsed.netloc.replace("127.0.0.1", "localhost", 1))))
+
+    return origins
 
 
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "")
@@ -160,7 +173,7 @@ FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
 CORS_ALLOW_ALL_ORIGINS = env_bool("CORS_ALLOW_ALL_ORIGINS", False)
 CORS_ALLOWED_ORIGINS = [
     origin.strip()
-    for origin in os.getenv("CORS_ALLOWED_ORIGINS", FRONTEND_URL).split(",")
+    for origin in os.getenv("CORS_ALLOWED_ORIGINS", ",".join(default_cors_origins(FRONTEND_URL))).split(",")
     if origin.strip()
 ]
 CORS_ALLOW_CREDENTIALS = True

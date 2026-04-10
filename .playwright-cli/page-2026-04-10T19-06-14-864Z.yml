@@ -1,0 +1,27 @@
+- generic [ref=e7]:
+  - heading "Login" [level=2] [ref=e8]
+  - generic [ref=e9]:
+    - textbox [ref=e10]
+    - generic: Enter username
+  - generic [ref=e11]:
+    - textbox [ref=e12]
+    - generic: Enter password
+    - img [ref=e14] [cursor=pointer]
+  - generic [ref=e16]:
+    - generic [ref=e17] [cursor=pointer]:
+      - checkbox "Remember me" [ref=e18]
+      - generic [ref=e19]: Remember me
+    - link "Forgot password?" [ref=e20] [cursor=pointer]:
+      - /url: /forgot-password
+  - button "Sign In" [ref=e21] [cursor=pointer]
+  - generic [ref=e23]: OR CONTINUE WITH
+  - generic [ref=e26]:
+    - button "Sign in with Google. Opens in new tab" [ref=e28] [cursor=pointer]:
+      - generic [ref=e30]:
+        - img [ref=e32]
+        - generic [ref=e39]: Sign in with Google
+    - iframe
+  - paragraph [ref=e41]:
+    - text: Don't have an account?
+    - link "Sign up" [ref=e42] [cursor=pointer]:
+      - /url: /register

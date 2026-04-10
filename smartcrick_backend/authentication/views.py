@@ -1,22 +1,22 @@
-from rest_framework.views import APIView
-from rest_framework import status
-from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
-from django.contrib.auth import authenticate
 from django.conf import settings
+from django.contrib.auth import authenticate
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import send_mail
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from drf_spectacular.utils import extend_schema
 from google.auth.transport import requests
 from google.oauth2 import id_token
-from rest_framework_simplejwt.tokens import RefreshToken
-from drf_spectacular.utils import extend_schema
-
 from registration.models import User
+from rest_framework import status
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
+
 from .serializers import (
-    LoginSerializer,
     ForgotPasswordSerializer,
+    LoginSerializer,
     ResetPasswordSerializer,
 )
 

@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes, FaSignOutAlt } from "react-icons/fa";
 
-import { AuthContext } from "../context/AuthContext.jsx";
+import { AuthContext } from "../context/auth-context.js";
 
 import "../css/navbar.css";
 
